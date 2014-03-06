@@ -1,0 +1,347 @@
+<?py #@ARGS _content, cust_title,user_key ?>
+<div class="col-xs-12">
+    <!-- PAGE CONTENT BEGINS -->
+
+    <!--<div class="alert alert-info">-->
+        <!--<i class="icon-hand-right"></i>-->
+
+        <!--Please note that demo server is not configured to save the changes, therefore you may get an error message.-->
+        <!--<button class="close" data-dismiss="alert">-->
+            <!--<i class="icon-remove"></i>-->
+        <!--</button>-->
+    <!--</div>-->
+        <table id="example" class="display" cellspacing="0" width="100%">
+    </table>
+    <!--<div style="display: none"><input  id="user_key" value=${user_key} ></div>-->
+
+
+    <!-- PAGE CONTENT ENDS -->
+</div><!-- /.col -->
+
+
+		<!-- page specific plugin scr   ipts -->
+<style type="text/css">
+            @import "/static/jquery-ui-1.10.4/themes/base/jquery-ui.css";
+            @import "/static/DataTables-1.9.4/media/css/jquery.dataTables_themeroller.css";
+            @import "/static/DataTables-1.9.4/extras/TableTools/media/css/TableTools.css";
+            @import "/static/DataTables-1.9.4/media/css/dataTables.editor.css";
+            /*@import "/static/bootstrap3/css/bootstrap.min.css";*/
+            /*@import "//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css";*/
+            @import "/static/DataTables-1.9.4/media/css/dataTables.bootstrap.css";
+            @import "/static/css/jquery-ui-timepicker-addon.css";
+
+
+
+    #container {
+        padding-top: 60px !important;
+        width: 960px !important;
+    }
+    #dt_example .big {
+        font-size: 1.3em;
+        line-height: 1.45em;
+        color: #111;
+        margin-left: -10px;
+        margin-right: -10px;
+        font-weight: normal;
+    }
+    #dt_example {
+        font: 95%/1.45em "Lucida Grande", Verdana, Arial, Helvetica, sans-serif;
+        color: #111;
+    }
+    div.dataTables_wrapper, table {
+        font: 13px/1.45em "Lucida Grande", Verdana, Arial, Helvetica, sans-serif;
+    }
+    #dt_example h1 {
+        font-size: 16px !important;
+        color: #111;
+    }
+    #footer {
+        line-height: 1.45em;
+    }
+    div.examples {
+        padding-top: 1em !important;
+    }
+    div.examples ul {
+        padding-top: 1em !important;
+        padding-left: 1em !important;
+        color: #111;
+    }
+</style>
+
+<script type="text/javascript" charset="utf-8" src="/static/DataTables-1.9.4/media/js/jquery.js" ></script>
+<script type="text/javascript" charset="utf-8" src="/static/jquery-ui-1.10.4/ui/jquery-ui.js" ></script>
+<script type="text/javascript" charset="utf-8" src="/static/DataTables-1.9.4/media/js/jquery.dataTables.js" ></script>
+<script type="text/javascript" charset="utf-8" src="/static/DataTables-1.9.4/extras/TableTools/media/js/ZeroClipboard.js" ></script>
+<script type="text/javascript" charset="utf-8" src="/static/DataTables-1.9.4/extras/TableTools/media/js/TableTools.js" ></script>
+<script type="text/javascript" charset="utf-8" src="/static/DataTables-1.9.4/media/js/dataTables.editor.js" ></script>
+<script type="text/javascript" charset="utf-8" src="/static/assets/js/bootstrap.min.js" ></script>
+<!--<script type="text/javascript" charset="utf-8" src="/static/DataTables-1.9.4/media/js/dataTables.bootstrap.js" ></script>-->
+<script type="text/javascript" charset="utf-8" src="/static/assets/js/jquery.dataTables.bootstrap.js"></script>
+<script type="text/javascript" src="/static/jquery-ui-1.10.4/ui/i18n/jquery.ui.datepicker-zh-CN.js"></script>
+<script type="text/javascript" src="/static/js/jquery-ui-timepicker-addon.js"></script>
+<script type="text/javascript" src="/static/js/jquery-ui-timepicker-zh-CN.js"></script>
+<!--<script type="text/javascript" charset="utf-8" src="/static/DataTables-1.9.4/media/js/dataTables.editor.bootstrap.js" ></script>-->
+
+
+<script type="text/javascript">
+        var editor; // use a global for the submit and return data rendering in the examples
+
+        $(document).ready(function() {
+            editor = new $.fn.dataTable.Editor( {
+                "ajaxUrl": "userManageList",
+                "domTable": "#example",
+                "fields": [ {
+                        "label": "用户名称:",
+                        "name": "user_name"
+                        },{
+                            "label": "用户账号:",
+                            "name": "user_id",
+                            "fieldInfo": "*"
+                        },{
+                            "label": "客户名称:",
+                            "name": "cust_name"
+                        }
+                          , {
+                            "label": "单位名称:",
+                            "name": "dept_name"
+                        }, {
+                            "label": "地域:",
+                            "name": "region_name"
+                        }, {
+                            "label": "手机:",
+                            "name": "user_tel"
+                        }, {
+                            "label": "座机:",
+                            "name": "user_tel2"
+                        }, {
+                            "label": "电子邮箱:",
+                            "name": "user_email"
+                        }, {
+                            "label": "状态:",
+                            "name": "user_status"
+                        }, {
+                            "label": "排序:",
+                            "name": "user_seq"
+                        }
+                        , {
+                            "label": "上次登陆时间:",
+                            "name": "user_lastLoginTime",
+                            "type": "datetime"
+                        }, {
+                            "label": "上次登陆IP:",
+                            "name": "user_lastLoginIp"
+                        }, {
+                            "label": "登陆次数:",
+                            "name": "user_loginCount"
+                        }, {
+                            "label": "用户生效时间:",
+                            "name": "user_beginDate",
+                            "type": "date",
+                            "dateFormat": $.datepicker.ISO_8601
+                        }, {
+                            "label": "用户失效时间:",
+                            "name": "user_endDate",
+                            "type": "date",
+                            "dateFormat": $.datepicker.ISO_8601
+                        }, {
+                            "label": "备注:",
+                            "name": "remark"
+                        }, {
+                            "label": "创建者:",
+                            "name": "creater"
+                        }, {
+                            "label": "创建时间:",
+                            "name": "createTime",
+                            "type": "date",
+                            "dateFormat": $.datepicker.ISO_8601
+                        }, {
+                            "label": "上次修改者:",
+                            "name": "lastUpdater"
+                        }, {
+                            "label": "上次修改时间:",
+                            "name": "lastUpdateTime",
+                            "type": "date",
+                            "dateFormat": $.datepicker.ISO_8601
+                        }
+                    ]
+                } );
+
+
+                $('#example').dataTable( {
+                    "bJQueryUI": true,
+//                    "processing": true,
+//                    "serverSide": true,
+//                    "bLengthChange": true,
+                    "sPaginationType": "full_numbers",
+                    "sDom": "<'row-fluid'<'span6'T><'span6'f>r>t<'row-fluid'<'span6'i><'span6'p>>",
+//                    "sDom":"<'row'<'col-xs-6'T><'col-xs-6'f>r>t<'row'<'col-xs-6'i><'col-xs-6'p>>",
+//                                    +
+//                            "<'row-fluid'<'span6'T><'span6'f>r>t<'row-fluid'<'span6'i><'span6'p>>",
+                    "sAjaxSource": "userManageList",
+
+                     "aoColumns" : [
+                         {sTitle: "全选"},
+                         {
+                        "mData" : "user_key",
+                        "sDefaultContent" : "",
+                        "bVisible" : false //此列不显示
+                    }, {
+                        "mData" : "cust_key",
+                        "sDefaultContent" : "",
+                        "bVisible" : false //此列不显示
+                    }, {
+                        "mData" : "dept_key",
+                        "sDefaultContent" : "",
+                        "bVisible" : false //此列不显示
+                    }, {
+                        "mData" : "region_key",
+                        "sDefaultContent" : "",
+                        "bVisible" : false //此列不显示
+                    }, {
+                        "mData" : "user_name",
+                        "sTitle" : "用户名",
+                        "sDefaultContent" : "",//此列默认值为""，以防数据中没有此值，DataTables加载数据的时候报错
+                        "sClass" : "center"
+                    }, {
+                        "mData" : "user_id",
+                        "sTitle" : "用户账号",
+                        "sDefaultContent" : "",
+                        "sClass" : "center"
+                    }, {
+                        "mData" : "cust_name",
+                        "sTitle" : "客户名称",
+                        "sDefaultContent" : "",
+                        "sClass" : "center"
+                    }, {
+                        "mData" : "dept_name",
+                        "sTitle" : "部门名称",
+                        "sDefaultContent" : "",
+                        "sClass" : "center"
+                    }, {
+                        "mData" : "region_name",
+                        "sTitle" : "地域名称",
+                        "sDefaultContent" : "",
+                        "sClass" : "center"
+                    }, {
+                        "mData" : "user_tel",
+                        "sTitle" : "手机",
+                        "sDefaultContent" : "",
+                        "sClass" : "center"
+                    }, {
+                        "mData" : "user_tel2",
+                        "sTitle" : "座机",
+                        "sDefaultContent" : "",
+                        "sClass" : "center"
+                    }, {
+                        "mData" : "user_email",
+                        "sTitle" : "电子邮箱",
+                        "sDefaultContent" : "",
+                        "sClass" : "center"
+                    }, {
+                        "mData" : "user_status",
+                        "sTitle" : "状态",
+                        "sDefaultContent" : "",
+                        "sClass" : "center"
+                    }, {
+                        "mData" : "user_seq",
+                        "sTitle" : "排序",
+                        "sDefaultContent" : "",
+                        "sClass" : "center"
+                    }, {
+                        "mData" : "user_lastLoginTime",
+                        "sTitle" : "上次登陆时间",
+                        "sDefaultContent" : "",
+                        "sClass" : "center"
+                    }, {
+                        "mData" : "user_lastLoginIP",
+                        "sTitle" : "上次登陆IP",
+                        "sDefaultContent" : "",
+                        "sClass" : "center"
+                    }, {
+                        "mData" : "user_loginCount",
+                        "sTitle" : "登陆次数",
+                        "sDefaultContent" : "",
+                        "sClass" : "center"
+                    }, {
+                        "mData" : "user_beginDate",
+                        "sTitle" : "用户生效时间",
+                        "sDefaultContent" : "",
+                        "sClass" : "center"
+                    }, {
+                        "mData" : "user_endDate",
+                        "sTitle" : "用户失效时间",
+                        "sDefaultContent" : "",
+                        "sClass" : "center"
+                    }, {
+                        "mData" : "remark",
+                        "sTitle" : "备注",
+                        "sDefaultContent" : "",
+                        "sClass" : "center"
+                    }, {
+                        "mData" : "creater",
+                        "sTitle" : "创建者",
+                        "sDefaultContent" : "",
+                        "sClass" : "center"
+                    }, {
+                        "mData" : "createTime",
+                        "sTitle" : "创建时间",
+                        "sDefaultContent" : "",
+                        "sClass" : "center"
+                    }, {
+                        "mData" : "lastUpdater",
+                        "sTitle" : "上次修改者",
+                        "sDefaultContent" : "",
+                        "sClass" : "center"
+                    }, {
+                        "mData" : "lastUpdateTime",
+                        "sTitle" : "上次修改时间",
+                        "sDefaultContent" : "",
+                        "sClass" : "center"
+                    }],
+                    "oLanguage": { //国际化配置
+                        "sProcessing" : "正在获取数据，请稍后...",
+                        "sLengthMenu" : "显示 _MENU_ 条",
+                        "sZeroRecords" : "没有您要搜索的内容",
+                        "sInfo" : "从 _START_ 到  _END_ 条记录 总记录数为 _TOTAL_ 条",
+                        "sInfoEmpty" : "记录数为0",
+                        "sInfoFiltered" : "(全部记录数 _MAX_ 条)",
+                        "sInfoPostFix" : "",
+                        "sSearch" : "搜索",
+                        "sUrl" : "",
+                        "oPaginate": {
+                            "sFirst" : "第一页",
+                            "sPrevious" : "上一页",
+                            "sNext" : "下一页",
+                            "sLast" : "最后一页"
+                        }
+                    }
+                    ,
+                    "oTableTools": {
+                        "sSwfPath": "/static/DataTables-1.9.4/extras/TableTools/media/swf/copy_csv_xls_pdf.swf",
+                        "sRowSelect": "multi",
+                        "aButtons": [
+                            { "sExtends": "editor_create", "editor": editor },
+                            { "sExtends": "editor_edit",   "editor": editor },
+                            { "sExtends": "editor_remove", "editor": editor },
+                            {
+                                "sExtends": "copy",
+                                "sButtonText": "复制到粘贴板"
+                            },
+                            {
+                                "sExtends": "xls",
+                                "sButtonText": "下载为Excel"
+                            },
+                            {
+                                "sExtends": "pdf",
+                                "sButtonText": "下载为pdf"
+                            },
+                            {
+                                "sExtends": "print",
+                                "sButtonText": "打印"
+                            }
+                        ]
+                    }
+                } );
+
+            } );
+        </script>
